@@ -12,13 +12,69 @@
         <h1>🏃‍♂️ حاسبة مركز الثقل البايوميكانيكي</h1>
         <p class="subtitle">أداة احترافية لحساب إحداثيات مركز الثقل للجسم البشري</p>
 
+        <!-- قسم بيانات اللاعب -->
+        <div class="player-info-section">
+            <h2 class="section-title">👤 بيانات اللاعب</h2>
+            
+            <div class="info-grid">
+                <!-- الصف الأول -->
+                <div class="info-field">
+                    <label for="playerName">الاسم الكامل <span class="required">*</span></label>
+                    <input type="text" id="playerName" placeholder="مثال: أحمد محمد علي">
+                </div>
+                
+                <div class="info-field">
+                    <label for="sport">الرياضة <span class="required">*</span></label>
+                    <input type="text" id="sport" placeholder="مثال: كرة القدم">
+                </div>
+
+                <!-- الصف الثاني -->
+                <div class="info-field">
+                    <label for="age">العمر (سنة) <span class="required">*</span></label>
+                    <input type="number" id="age" placeholder="مثال: 22" min="1" max="100">
+                </div>
+
+                <div class="info-field">
+                    <label for="height">الطول (سم) <span class="required">*</span></label>
+                    <input type="number" id="height" placeholder="مثال: 175" min="50" max="250" step="0.1">
+                </div>
+
+                <!-- الصف الثالث -->
+                <div class="info-field">
+                    <label for="gender">الجنس <span class="required">*</span></label>
+                    <select id="gender">
+                        <option value="">اختر...</option>
+                        <option value="ذكر">ذكر</option>
+                        <option value="أنثى">أنثى</option>
+                    </select>
+                </div>
+
+                <div class="info-field">
+                    <label for="date">التاريخ <span class="required">*</span></label>
+                    <input type="date" id="date">
+                </div>
+
+                <!-- الصف الرابع -->
+                <div class="info-field full-width">
+                    <label for="movementName">اسم الحركة المُحللة <span class="required">*</span></label>
+                    <input type="text" id="movementName" placeholder="مثال: ضربة كرة حرة، قفزة، رمية">
+                </div>
+
+                <!-- الصف الخامس - اختياري -->
+                <div class="info-field full-width">
+                    <label for="analystName">اسم المحلل / المدرب (اختياري)</label>
+                    <input type="text" id="analystName" placeholder="مثال: د. طارق صلاح الدين">
+                </div>
+            </div>
+        </div>
+
         <!-- قسم الإدخال -->
         <div class="input-section">
-            <h2 class="section-title">📝 أدخل البيانات</h2>
+            <h2 class="section-title">📝 بيانات القياس</h2>
             
             <!-- وزن اللاعب -->
             <div class="input-group weight-input">
-                <label for="weight">⚖️ وزن اللاعب (كجم):</label>
+                <label for="weight">⚖️ وزن اللاعب (كجم) <span class="required">*</span></label>
                 <input type="number" id="weight" placeholder="مثال: 75" min="1" step="0.1">
             </div>
 
@@ -47,6 +103,9 @@
             <div class="results-header">
                 <h2>✨ نتائج الحساب</h2>
             </div>
+
+            <!-- بطاقة معلومات اللاعب في النتائج -->
+            <div class="player-summary" id="playerSummary"></div>
 
             <div class="cog-values">
                 <div class="cog-card">

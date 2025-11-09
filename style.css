@@ -47,6 +47,63 @@ h1 {
     font-weight: 600;
 }
 
+/* ========== قسم بيانات اللاعب ========== */
+.player-info-section {
+    background: #f8f9fa;
+    padding: 30px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 2px solid #667eea;
+}
+
+.info-grid {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 20px;
+}
+
+.info-field {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.info-field.full-width {
+    grid-column: 1 / -1;
+}
+
+.info-field label {
+    font-size: 1em;
+    font-weight: 600;
+    color: #333;
+}
+
+.required {
+    color: #dc3545;
+    font-weight: bold;
+}
+
+.info-field input,
+.info-field select {
+    padding: 12px;
+    border: 2px solid #ddd;
+    border-radius: 10px;
+    font-size: 1em;
+    font-family: 'Cairo', sans-serif;
+    transition: all 0.3s;
+}
+
+.info-field input:focus,
+.info-field select:focus {
+    outline: none;
+    border-color: #667eea;
+    box-shadow: 0 0 0 3px rgba(102, 126, 234, 0.1);
+}
+
+.info-field select {
+    cursor: pointer;
+}
+
 /* ========== قسم الإدخال ========== */
 .input-section {
     background: #f8f9fa;
@@ -95,9 +152,9 @@ h1 {
 
 .coordinate-row {
     display: grid;
-    grid-template-columns: 2fr 1.5fr 1.5fr;
-    gap: 15px;
-    padding: 15px 20px;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 10px;
+    padding: 12px 15px;
     align-items: center;
     border-bottom: 1px solid #e9ecef;
 }
@@ -106,7 +163,7 @@ h1 {
     background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
     color: white;
     font-weight: 600;
-    font-size: 1.05em;
+    font-size: 0.95em;
 }
 
 .coordinate-row:not(.header-row):hover {
@@ -116,7 +173,7 @@ h1 {
 .col-segment {
     font-weight: 600;
     color: #333;
-    font-size: 1.05em;
+    font-size: 0.95em;
 }
 
 .header-row .col-segment,
@@ -219,6 +276,43 @@ button {
     border-radius: 15px;
     margin-bottom: 30px;
     text-align: center;
+}
+
+/* ========== ملخص بيانات اللاعب في النتائج ========== */
+.player-summary {
+    background: #f8f9fa;
+    padding: 25px;
+    border-radius: 15px;
+    margin-bottom: 30px;
+    border: 2px solid #667eea;
+}
+
+.player-summary h3 {
+    color: #667eea;
+    margin-bottom: 15px;
+    font-size: 1.4em;
+    text-align: center;
+}
+
+.summary-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+    gap: 15px;
+}
+
+.summary-item {
+    display: flex;
+    gap: 10px;
+    align-items: center;
+}
+
+.summary-label {
+    font-weight: 600;
+    color: #555;
+}
+
+.summary-value {
+    color: #333;
 }
 
 /* ========== بطاقات القيم ========== */
@@ -328,17 +422,36 @@ tr:hover {
 @media print {
     body {
         background: white;
+        padding: 0;
     }
+    
     .container {
         box-shadow: none;
+        max-width: 100%;
     }
+    
+    .player-info-section,
     .input-section, 
     .button-group, 
-    .btn-print {
+    .btn-print,
+    #errorAlert {
         display: none !important;
     }
+    
     .results-section {
         display: block !important;
+    }
+    
+    .player-summary {
+        page-break-after: avoid;
+    }
+    
+    .chart-container {
+        page-break-inside: avoid;
+    }
+    
+    table {
+        page-break-inside: avoid;
     }
 }
 
@@ -350,6 +463,10 @@ tr:hover {
     
     .container {
         padding: 20px;
+    }
+    
+    .info-grid {
+        grid-template-columns: 1fr;
     }
     
     .coordinate-row {
@@ -401,5 +518,9 @@ tr:hover {
     button {
         padding: 12px 25px;
         font-size: 1em;
+    }
+    
+    .summary-grid {
+        grid-template-columns: 1fr;
     }
 }

@@ -17,10 +17,12 @@ const segments = [
 ];
 
 let chart = null;
+let playerData = {};
 
 // ========== تهيئة حقول الإدخال عند تحميل الصفحة ==========
 document.addEventListener('DOMContentLoaded', function() {
     initializeInputs();
+    setDefaultDate();
 });
 
 function initializeInputs() {
@@ -50,8 +52,78 @@ function initializeInputs() {
     container.innerHTML = html;
 }
 
+function setDefaultDate() {
+    const today = new Date().toISOString().split('T')[0];
+    document.getElementById('date').value = today;
+}
+
+// ========== التحقق من بيانات اللاعب ==========
+function validatePlayerData() {
+    const playerName = document.getElementById('playerName').value.trim();
+    const sport = document.getElementById('sport').value.trim();
+    const age = document.getElementById('age').value;
+    const height = document.getElementById('height').value;
+    const gender = document.getElementById('gender').value;
+    const date = document.getElementById('date').value;
+    const movementName = document.getElementById('movementName').value.trim();
+    
+    if (!playerName) {
+        showError('⚠️ الرجاء إدخال اسم اللاعب');
+        return false;
+    }
+    
+    if (!sport) {
+        showError('⚠️ الرجاء إدخال نوع الرياضة');
+        return false;
+    }
+    
+    if (!age || age <= 0) {
+        showError('⚠️ الرجاء إدخال عمر صحيح');
+        return false;
+    }
+    
+    if (!height || height <= 0) {
+        showError('⚠️ الرجاء إدخال طول صحيح');
+        return false;
+    }
+    
+    if (!gender) {
+        showError('⚠️ الرجاء اختيار الجنس');
+        return false;
+    }
+    
+    if (!date) {
+        showError('⚠️ الرجاء إدخال التاريخ');
+        return false;
+    }
+    
+    if (!movementName) {
+        showError('⚠️ الرجاء إدخال اسم الحركة المُحللة');
+        return false;
+    }
+    
+    // حفظ البيانات
+    playerData = {
+        name: playerName,
+        sport: sport,
+        age: age,
+        height: height,
+        gender: gender,
+        date: date,
+        movementName: movementName,
+        analystName: document.getElementById('analystName').value.trim() || 'غير محدد'
+    };
+    
+    return true;
+}
+
 // ========== الدالة الرئيسية لحساب مركز الثقل ==========
 function calculateCOG() {
+    // التحقق من بيانات اللاعب
+    if (!validatePlayerData()) {
+        return;
+    }
+    
     // قراءة الوزن
     const weight = parseFloat(document.getElementById('weight').value);
     
@@ -138,6 +210,9 @@ function calculateCOG() {
     document.getElementById('cgyValue').textContent = cgy.toFixed(2);
     document.getElementById('totalWeight').textContent = weight.toFixed(2);
 
+    // عرض ملخص بيانات اللاعب
+    displayPlayerSummary(weight);
+
     // إظهار قسم النتائج
     document.getElementById('results').style.display = 'block';
     
@@ -151,6 +226,63 @@ function calculateCOG() {
             block: 'start' 
         });
     }, 100);
+}
+
+// ========== عرض ملخص بيانات اللاعب ==========
+function displayPlayerSummary(weight) {
+    const summaryDiv = document.getElementById('playerSummary');
+    
+    // تنسيق التاريخ
+    const dateObj = new Date(playerData.date);
+    const formattedDate = dateObj.toLocaleDateString('ar-EG', {
+        year: 'numeric',
+        month: 'long',
+        day: 'numeric'
+    });
+    
+    summaryDiv.innerHTML = `
+        <h3>📋 بيانات اللاعب</h3>
+        <div class="summary-grid">
+            <div class="summary-item">
+                <span class="summary-label">👤 الاسم:</span>
+                <span class="summary-value">${playerData.name}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">🏃 الرياضة:</span>
+                <span class="summary-value">${playerData.sport}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">🎂 العمر:</span>
+                <span class="summary-value">${playerData.age} سنة</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">📏 الطول:</span>
+                <span class="summary-value">${playerData.height} سم</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">⚖️ الوزن:</span>
+                <span class="summary-value">${weight} كجم</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">🚹 الجنس:</span>
+                <span class="summary-value">${playerData.gender}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">📅 التاريخ:</span>
+                <span class="summary-value">${formattedDate}</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">🎯 الحركة:</span>
+                <span class="summary-value">${playerData.movementName}</span>
+            </div>
+            ${playerData.analystName !== 'غير محدد' ? `
+            <div class="summary-item">
+                <span class="summary-label">👨‍🏫 المحلل:</span>
+                <span class="summary-value">${playerData.analystName}</span>
+            </div>
+            ` : ''}
+        </div>
+    `;
 }
 
 // ========== دالة رسم الرسم البياني ==========
@@ -276,6 +408,16 @@ function drawChart(cgx, cgy) {
 
 // ========== دالة إعادة تعيين الحاسبة ==========
 function resetCalculator() {
+    // إعادة تعيين بيانات اللاعب
+    document.getElementById('playerName').value = '';
+    document.getElementById('sport').value = '';
+    document.getElementById('age').value = '';
+    document.getElementById('height').value = '';
+    document.getElementById('gender').value = '';
+    setDefaultDate();
+    document.getElementById('movementName').value = '';
+    document.getElementById('analystName').value = '';
+    
     // إعادة تعيين الوزن
     document.getElementById('weight').value = '';
     
@@ -297,6 +439,9 @@ function resetCalculator() {
         chart = null;
     }
     
+    // مسح البيانات المحفوظة
+    playerData = {};
+    
     // التمرير للأعلى
     window.scrollTo({ top: 0, behavior: 'smooth' });
 }
@@ -304,7 +449,7 @@ function resetCalculator() {
 // ========== دالة الطباعة ==========
 function printResults() {
     const originalTitle = document.title;
-    document.title = 'CenterOfGravity';
+    document.title = 'CenterOfGravity_' + playerData.name.replace(/\s+/g, '_');
     window.print();
     document.title = originalTitle;
 }
