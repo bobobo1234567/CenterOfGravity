@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="ar">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>حاسبة مركز الثقل البايوميكانيكي</title>
+  <link rel="stylesheet" href="style.css">
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+  <div class="container">
+    <h1>🧍‍♂️ حاسبة مركز الثقل البايوميكانيكي</h1>
+    
+    <!-- قسم إدخال الوزن -->
+    <div class="input-section">
+      <label for="weight">وزن اللاعب (كجم):</label>
+      <input type="number" id="weight" placeholder="أدخل الوزن هنا" min="1" required>
+      <button id="calcBtn">احسب مركز الثقل</button>
+    </div>
+
+    <!-- قسم النتائج -->
+    <div class="result-section" id="resultSection" style="display: none;">
+      <h2>نتائج الحساب</h2>
+      <p><strong>الإحداثي الأفقي (CGx):</strong> <span id="cgx"></span> متر</p>
+      <p><strong>الإحداثي الرأسي (CGy):</strong> <span id="cgy"></span> متر</p>
+
+      <canvas id="cgChart"></canvas>
+
+      <button id="printBtn" class="print-btn">🖨️ طباعة النتيجة</button>
+    </div>
+  </div>
+
+  <script src="script.js"></script>
+</body>
+</html>

@@ -1,0 +1,97 @@
+/* ---- تصميم عام ---- */
+body {
+  font-family: 'Cairo', sans-serif;
+  background: #f8f9fa;
+  color: #222;
+  display: flex;
+  justify-content: center;
+  align-items: flex-start;
+  min-height: 100vh;
+  padding: 20px;
+  direction: rtl;
+}
+
+.container {
+  background: white;
+  border-radius: 20px;
+  padding: 30px;
+  width: 500px;
+  max-width: 95%;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  text-align: center;
+}
+
+h1 {
+  color: #0077b6;
+  margin-bottom: 25px;
+}
+
+.input-section label {
+  font-weight: bold;
+  display: block;
+  margin-bottom: 10px;
+}
+
+.input-section input {
+  width: 80%;
+  padding: 10px;
+  border-radius: 10px;
+  border: 1px solid #ccc;
+  margin-bottom: 15px;
+  font-size: 16px;
+}
+
+.input-section button {
+  background: #0077b6;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  font-size: 16px;
+  transition: 0.3s;
+}
+
+.input-section button:hover {
+  background: #005f87;
+}
+
+.result-section {
+  margin-top: 30px;
+}
+
+.print-btn {
+  background: #198754;
+  color: white;
+  border: none;
+  padding: 10px 20px;
+  border-radius: 10px;
+  cursor: pointer;
+  margin-top: 20px;
+  font-size: 16px;
+}
+
+.print-btn:hover {
+  background: #157347;
+}
+
+/* ---- Responsive Design ---- */
+@media (max-width: 600px) {
+  .container {
+    width: 95%;
+    padding: 20px;
+  }
+
+  .input-section input {
+    width: 100%;
+  }
+
+  canvas {
+    width: 100% !important;
+    height: auto !important;
+  }
+
+  .input-section button, .print-btn {
+    width: 100%;
+  }
+}
